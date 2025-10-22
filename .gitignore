@@ -361,3 +361,22 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# === Custom project ignores ===
+
+# Uploaded files
+wwwroot/uploads/
+Uploads/
+UploadedFiles/
+
+# Local app settings (optional)
+appsettings.Development.json
+
+# Documents, reports, or submission files
+*.docx
+*.pptx
+*.pdf
+
+# Logs or temporary data
+*.log
+*.tmp
