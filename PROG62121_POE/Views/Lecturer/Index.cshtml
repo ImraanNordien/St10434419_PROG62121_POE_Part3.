@@ -1,0 +1,98 @@
+﻿@model PROG62121_POE.Models.Claim
+@{
+    ViewData["Title"] = "Submit Claim";
+}
+
+<div class="container page-container">
+    <h2>Submit Monthly Claim</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <form asp-action="Index" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label asp-for="LecturerName" class="form-label">Lecturer Name</label>
+            <input asp-for="LecturerName" class="form-control" type="text" required />
+            <span asp-validation-for="LecturerName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="HoursWorked" class="form-label"></label>
+            <input asp-for="HoursWorked" class="form-control" type="number" min="1" required />
+            <span asp-validation-for="HoursWorked" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="HourlyRate" class="form-label"></label>
+            <input asp-for="HourlyRate" class="form-control" type="number" min="1" required />
+            <span asp-validation-for="HourlyRate" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Notes" class="form-label"></label>
+            <textarea asp-for="Notes" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Notes" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="uploadedFile" class="form-label">Upload Supporting Document</label>
+            <input type="file" name="uploadedFile" class="form-control" accept=".pdf,.docx,.xlsx" required />
+            <small class="form-text text-muted">Accepted file types: .pdf, .docx, .xlsx</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit Claim</button>
+    </form>
+
+    <hr />
+
+    <h3>Your Submitted Claims</h3>
+    @{
+        var claims = ViewData["Claims"] as List<PROG62121_POE.Models.Claim>;
+    }
+
+    @if (claims == null || claims.Count == 0)
+    {
+        <p>No claims submitted yet.</p>
+    }
+    else
+    {
+        <table class="table table-striped mt-3">
+            <thead>
+                <tr>
+                    <th>Hours</th>
+                    <th>Rate</th>
+                    <th>Notes</th>
+                    <th>File</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in claims)
+                {
+                    <tr>
+                        <td>@c.HoursWorked</td>
+                        <td>@c.HourlyRate</td>
+                        <td>@c.Notes</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(c.FileName))
+                            {
+                                <a asp-action="Download" asp-route-fileName="@c.FileName">@c.FileName</a>
+                            }
+                        </td>
+                        <td>@c.Status</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,88 @@
+/* Global body background and font */
+body {
+    background: linear-gradient(135deg, #00072d, #001f54, #003f88);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar background */
+.navbar-custom {
+    background-color: #00072d;
+}
+
+/* Navbar links */
+.navbar-nav .nav-link {
+    color: #ffffff !important; /* white text */
+    transition: color 0.3s, background-color 0.3s;
+}
+
+    /* Navbar link hover/focus */
+    .navbar-nav .nav-link:hover,
+    .navbar-nav .nav-link:focus {
+        color: #00d1ff !important; /* bright cyan on hover */
+        background-color: transparent;
+    }
+
+/* Active page link */
+.navbar-nav .nav-item.active .nav-link {
+    background-color: #1a1a40; /* slightly lighter navy */
+    color: #00d1ff;
+}
+
+/* Dropdown menu background */
+.dropdown-menu {
+    background-color: #000b40;
+}
+
+    /* Dropdown links hover */
+    .dropdown-menu .dropdown-item:hover {
+        color: #00d1ff;
+        background-color: transparent;
+    }
+
+/* Page container */
+.page-container {
+    background-color: #ffffff; /* white for contrast */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    margin-top: 30px;
+}
+
+    /* Page header */
+    .page-container h2 {
+        color: #00072d; /* dark navy title */
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    /* Form labels */
+    .page-container label {
+        color: #00072d;
+        font-weight: 500;
+    }
+
+/* Submit button */
+.btn-primary {
+    background-color: #00072d;
+    border-color: #00072d;
+    color: #ffffff;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+    .btn-primary:hover {
+        background-color: #00d1ff; /* cyan hover */
+        color: #00072d;
+    }
+
+/* Welcome message text */
+.welcome-text {
+    color: #ffffff; /* white */
+}
+
+.homepage-image {
+    border: 3px solid #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* subtle shadow */
+}

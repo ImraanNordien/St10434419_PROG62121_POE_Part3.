@@ -1,0 +1,52 @@
+﻿@model List<PROG62121_POE.Models.Claim>
+@{
+    ViewData["Title"] = "Programme Coordinator - Pending Claims";
+}
+
+<div class="container page-container">
+    <h2>Pending Claims</h2>
+
+    @if (!Model.Any())
+    {
+        <p>No pending claims at the moment.</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Lecturer</th>
+                    <th>Hours</th>
+                    <th>Rate</th>
+                    <th>Notes</th>
+                    <th>File</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var claim in Model)
+                {
+                    <tr>
+                        <td>@claim.LecturerName</td>
+                        <td>@claim.HoursWorked</td>
+                        <td>@claim.HourlyRate</td>
+                        <td>@claim.Notes</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(claim.FileName))
+                            {
+                                <a href="~/uploads/@claim.FileName" target="_blank">View / Download</a>
+                            }
+                        </td>
+                        <td>
+                            <form asp-action="VerifyClaim" method="post">
+                                <input type="hidden" name="claimId" value="@claim.ClaimId" />
+                                <button type="submit" name="action" value="verify" class="btn btn-success btn-sm">Verify</button>
+                                <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm">Reject</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
