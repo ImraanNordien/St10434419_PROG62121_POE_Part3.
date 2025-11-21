@@ -1,98 +1,75 @@
-Contract Monthly Claim System — Part 3 (Final POE)
-Login Credentials
-Role	Email	Password	Description
-Lecturer	lecturer1@college.com
-	pass123	Submit monthly claims, upload documents, view submission history
-Programme Coordinator	pc1@college.com
-	pass123	Verify pending claims submitted by lecturers
-Academic Manager	am1@college.com
-	pass123	Approve claims verified by Programme Coordinators
-HR (Admin)	hr1@college.com
-	pass123	Manage users, set hourly rates, update roles, generate reports
-Lecturer Feedback from Part 2 and Implementation
-Feedback	Implementation
-Lecturers should not set their own hourly rate	HR module added to define hourly rates; Lecturers’ rates are now automatically pulled from the database.
-Files stored without validation	File uploads now validated for type (PDF, DOCX, XLSX) and size; securely stored under /wwwroot/uploads/.
-Generic error messages for file issues	Detailed feedback provided for missing, oversized, or invalid files.
-Missing functionality testing	Unit tests added for claim submission, including valid/invalid inputs and file validation.
-Managers approving unverified claims	Workflow updated: Coordinators verify claims before Managers approve; approved/rejected claims move to separate views.
-Approved claims still shown in Pending	Approved and rejected claims are now filtered out from Pending Claims view.
-New Features
+# Contract Monthly Claim System — Part 3 (Final POE)
 
-Session-Based Login: Secure authentication for each role without using Identity.
+## Login Credentials
 
-Database Integration: SQL Server database for persistent user and claim data.
+| Role | Email | Password | Description |
+|------|-------|---------|------------|
+| Lecturer | lecturer1@college.com | pass123 | Submit monthly claims, upload documents, view submission history |
+| Programme Coordinator | pc1@college.com | pass123 | Verify pending claims submitted by lecturers |
+| Academic Manager | am1@college.com | pass123 | Approve claims verified by Programme Coordinators |
+| HR (Admin) | hr1@college.com | pass123 | Manage users, set hourly rates, update roles, generate reports |
 
-Role-Based Access Control: Pages and functionality restricted by user role.
+## Lecturer Feedback from Part 2 and Implementation
 
-Claim Workflow Automation: Claims automatically move through Pending → Verified → Approved.
+| Feedback | Implementation |
+|----------|---------------|
+| Lecturers should not set their own hourly rate | HR module added to define hourly rates; Lecturers’ rates are now automatically pulled from the database. |
+| Files stored without validation | File uploads now validated for type (PDF, DOCX, XLSX) and size; securely stored under `/wwwroot/uploads/`. |
+| Generic error messages for file issues | Detailed feedback provided for missing, oversized, or invalid files. |
+| Missing functionality testing | Unit tests added for claim submission, including valid/invalid inputs and file validation. |
+| Managers approving unverified claims | Workflow updated: Coordinators verify claims before Managers approve; approved/rejected claims move to separate views. |
+| Approved claims still shown in Pending | Approved and rejected claims are now filtered out from Pending Claims view. |
 
-Auto Payment Calculation: Lecturer payments calculated as hours × hourly rate.
+## New Features
 
-File Upload Validation: Checks for supported formats and size limits.
+- **Session-Based Login:** Secure authentication for each role without using Identity  
+- **Database Integration:** SQL Server database for persistent user and claim data  
+- **Role-Based Access Control:** Pages and functionality restricted by user role  
+- **Claim Workflow Automation:** Claims automatically move through Pending → Verified → Approved  
+- **Auto Payment Calculation:** Lecturer payments calculated as hours × hourly rate  
+- **File Upload Validation:** Checks for supported formats and size limits  
+- **HR Dashboard:** HR can manage users, roles, and hourly rates  
+- **Report Generation:** HR can view and generate summary reports of approved claims  
 
-HR Dashboard: HR can manage users, roles, and hourly rates.
-
-Report Generation: HR can view and generate summary reports of approved claims.
-
-Testing
+## Testing
 
 Five unit tests cover:
 
-Valid claim submission
+1. Valid claim submission  
+2. Invalid file upload  
+3. Missing input fields  
+4. Approval workflow  
+5. Database claim retrieval  
 
-Invalid file upload
+## Video Demonstration
 
-Missing input fields
+- Shows all roles and workflows  
+- Demonstrates login access control  
+- Includes database operations and unit tests  
 
-Approval workflow
+## Technologies
 
-Database claim retrieval
+- ASP.NET Core MVC  
+- Entity Framework Core with SQL Server (LocalDB)  
+- Session-based authentication  
+- C#, Razor Views, LINQ  
+- Bootstrap for UI styling  
 
-Video Demonstration
-
-Shows all roles and workflows
-
-Demonstrates login access control
-
-Includes database operations and unit tests
-
-Technologies
-
-ASP.NET Core MVC
-
-Entity Framework Core with SQL Server (LocalDB)
-
-Session-based authentication
-
-C#, Razor Views, LINQ
-
-Bootstrap for UI styling
-
-Version Control
+## Version Control
 
 At least 10 descriptive commits, including:
 
-Database integration
+- Database integration  
+- Session-based login  
+- HR module and CRUD operations  
+- Claim verification workflow  
+- File validation and error handling  
+- Approved/rejected claim filtering  
+- Unit tests  
+- Report generation  
+- UI styling updates  
+- Updated README/documentation  
 
-Session-based login
-
-HR module and CRUD operations
-
-Claim verification workflow
-
-File validation and error handling
-
-Approved/rejected claim filtering
-
-Unit tests
-
-Report generation
-
-UI styling updates
-
-Updated README/documentation
-
-Conclusion
+## Conclusion
 
 Part 3 automates the claim process for all roles, centralizes HR management, enforces proper workflow, validates file uploads, and secures sessions, fully meeting the POE Part 3 requirements.
