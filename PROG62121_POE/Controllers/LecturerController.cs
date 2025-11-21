@@ -56,63 +56,28 @@ namespace PROG62121_POE.Controllers
             if (lecturer == null)
                 return RedirectToAction("Login", "Account");
 
-            // ✅ NEW: Validate hours range
-            if (claim.HoursWorked <= 0 || claim.HoursWorked > 180)
+            if (claim.HoursWorked <= 0 || uploadedFile == null)
             {
-                TempData["Error"] = "Hours worked must be between 1 and 180.";
+                TempData["Error"] = "Please fill in all fields and upload a file.";
                 var claims = await _claimRepo.GetClaimsByLecturerIdAsync(lecturer.Id);
                 ViewData["Claims"] = claims;
                 return View(claim);
             }
-
-            // ✅ NEW: Check for file upload
-            if (uploadedFile == null)
-            {
-                TempData["Error"] = "Please upload a supporting document.";
-                var claims = await _claimRepo.GetClaimsByLecturerIdAsync(lecturer.Id);
-                ViewData["Claims"] = claims;
-                return View(claim);
-            }
-
-            // ✅ NEW: Validate file type and size
-            var allowedExtensions = new[] { ".pdf", ".docx", ".xlsx", ".png", ".jpg" };
-            var extension = Path.GetExtension(uploadedFile.FileName).ToLowerInvariant();
-            if (!allowedExtensions.Contains(extension))
-            {
-                TempData["Error"] = "Invalid file type. Only PDF, Word, Excel, PNG, and JPG files are allowed.";
-                var claims = await _claimRepo.GetClaimsByLecturerIdAsync(lecturer.Id);
-                ViewData["Claims"] = claims;
-                return View(claim);
-            }
-
-            const long maxFileSize = 5 * 1024 * 1024; // 5 MB
-            if (uploadedFile.Length > maxFileSize)
-            {
-                TempData["Error"] = "File too large. Maximum size allowed is 5 MB.";
-                var claims = await _claimRepo.GetClaimsByLecturerIdAsync(lecturer.Id);
-                ViewData["Claims"] = claims;
-                return View(claim);
-            }
-
-            // ✅ NEW: Safer file naming
-            var sanitizedFileName = Path.GetFileNameWithoutExtension(uploadedFile.FileName);
-            sanitizedFileName = $"{sanitizedFileName}_{DateTime.Now:yyyyMMddHHmmss}{extension}";
 
             var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads");
             if (!Directory.Exists(uploadsFolder))
                 Directory.CreateDirectory(uploadsFolder);
 
-            var filePath = Path.Combine(uploadsFolder, sanitizedFileName);
+            var filePath = Path.Combine(uploadsFolder, uploadedFile.FileName);
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await uploadedFile.CopyToAsync(stream);
             }
 
-            // ✅ Populate claim details safely
             claim.LecturerId = lecturer.Id;
             claim.LecturerName = $"{lecturer.FirstName} {lecturer.LastName}";
             claim.HourlyRate = lecturer.HourlyRate;
-            claim.FileName = sanitizedFileName;
+            claim.FileName = uploadedFile.FileName;
             claim.Status = "Pending";
 
             await _claimRepo.AddClaimAsync(claim);
