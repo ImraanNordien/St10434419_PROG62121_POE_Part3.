@@ -31,21 +31,12 @@
 - **HR Dashboard:** HR can manage users, roles, and hourly rates  
 - **Report Generation:** HR can view and generate summary reports of approved claims  
 
-## Testing
-
-Five unit tests cover:
-
-1. Valid claim submission  
-2. Invalid file upload  
-3. Missing input fields  
-4. Approval workflow  
-5. Database claim retrieval  
-
 ## Video Demonstration
 
 - Shows all roles and workflows  
 - Demonstrates login access control  
-- Includes database operations and unit tests  
+- Includes database operations and unit tests
+- Video Link:
 
 ## Technologies
 
