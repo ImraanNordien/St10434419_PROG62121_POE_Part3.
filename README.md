@@ -36,7 +36,7 @@
 - Shows all roles and workflows  
 - Demonstrates login access control  
 - Includes database operations and unit tests
-- Video Link:
+- Video Link: https://www.youtube.com/watch?v=xvriFYxKQWY
 
 ## Technologies
 
