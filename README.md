@@ -61,10 +61,6 @@ At least 10 descriptive commits, including:
 - UI styling updates  
 - Updated README/documentation
 
-## Access the Application
-
-Try the live web application here: https://localhost:7036/
-
 ## Conclusion
 
 Part 3 automates the claim process for all roles, centralizes HR management, enforces proper workflow, validates file uploads, and secures sessions, fully meeting the POE Part 3 requirements.
