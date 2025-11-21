@@ -1,101 +1,81 @@
 ﻿@model PROG62121_POE.Models.Claim
 @{
-    ViewData["Title"] = "Submit Claim";
+    ViewData["Title"] = "Submit Monthly Claim";
+    var lecturerName = ViewData["LecturerName"];
+    var hourlyRate = ViewData["HourlyRate"];
+    var claims = ViewData["Claims"] as List<PROG62121_POE.Models.Claim>;
 }
 
-<div class="container page-container">
-    <h2>Submit Monthly Claim</h2>
+<h2>Submit Monthly Claim</h2>
 
-    @if (TempData["Success"] != null)
-    {
-        <div class="alert alert-success">@TempData["Success"]</div>
-    }
-    @if (TempData["Error"] != null)
-    {
-        <div class="alert alert-danger">@TempData["Error"]</div>
-    }
+<!-- ✅ Display lecturer info -->
+<p><strong>Lecturer:</strong> @lecturerName</p>
+<p><strong>Hourly Rate:</strong> R<span id="hourlyRate">@hourlyRate</span></p> <!-- Added read-only display -->
 
-    <form asp-action="Index" method="post" enctype="multipart/form-data">
-        <div class="mb-3">
-            <label asp-for="LecturerName" class="form-label">Lecturer Name</label>
-            <input asp-for="LecturerName" class="form-control" type="text" required />
-            <span asp-validation-for="LecturerName" class="text-danger"></span>
-        </div>
+<form asp-action="Index" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label>Hours Worked</label>
+        <input asp-for="HoursWorked" class="form-control" id="hoursWorked" type="number" step="0.5" />
+    </div>
 
-        <div class="mb-3">
-            <label asp-for="HoursWorked" class="form-label"></label>
-            <input asp-for="HoursWorked" class="form-control" type="number" min="1" required />
-            <span asp-validation-for="HoursWorked" class="text-danger"></span>
-        </div>
+    <!-- ✅ New: Auto-calculated total -->
+    <div class="form-group">
+        <label>Total Payment</label>
+        <input type="text" id="totalPayment" class="form-control" readonly />
+    </div>
 
-        <div class="mb-3">
-            <label asp-for="HourlyRate" class="form-label"></label>
-            <input asp-for="HourlyRate" class="form-control" type="number" min="1" required />
-            <span asp-validation-for="HourlyRate" class="text-danger"></span>
-        </div>
+    <div class="form-group">
+        <label>Supporting Document</label>
+        <input type="file" name="uploadedFile" class="form-control" />
+    </div>
 
-        <div class="mb-3">
-            <label asp-for="Notes" class="form-label"></label>
-            <textarea asp-for="Notes" class="form-control" rows="3"></textarea>
-            <span asp-validation-for="Notes" class="text-danger"></span>
-        </div>
+    <button type="submit" class="btn btn-primary">Submit Claim</button>
+</form>
 
-        <div class="mb-3">
-            <label for="uploadedFile" class="form-label">Upload Supporting Document</label>
-            <input type="file" name="uploadedFile" class="form-control" accept=".pdf,.docx,.xlsx" required />
-            <small class="form-text text-muted">Accepted file types: .pdf, .docx, .xlsx</small>
-        </div>
+<hr />
 
-        <button type="submit" class="btn btn-primary">Submit Claim</button>
-    </form>
-
-    <hr />
-
-    <h3>Your Submitted Claims</h3>
-    @{
-        var claims = ViewData["Claims"] as List<PROG62121_POE.Models.Claim>;
-    }
-
-    @if (claims == null || claims.Count == 0)
-    {
-        <p>No claims submitted yet.</p>
-    }
-    else
-    {
-        <table class="table table-striped mt-3">
-            <thead>
+<h3>Your Submitted Claims</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Claim ID</th>
+            <th>Hours Worked</th>
+            <th>Hourly Rate</th>
+            <th>Status</th>
+            <th>File</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (claims != null)
+        {
+            foreach (var claim in claims)
+            {
                 <tr>
-                    <th>Hours</th>
-                    <th>Rate</th>
-                    <th>Notes</th>
-                    <th>File</th>
-                    <th>Status</th>
+                    <td>@claim.ClaimId</td>
+                    <td>@claim.HoursWorked</td>
+                    <td>R @claim.HourlyRate</td>
+                    <td>@claim.Status</td>
+                    <td>
+                        <a asp-action="Download" asp-route-fileName="@claim.FileName">Download</a>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var c in claims)
-                {
-                    <tr>
-                        <td>@c.HoursWorked</td>
-                        <td>@c.HourlyRate</td>
-                        <td>@c.Notes</td>
-                        <td>
-                            @if (!string.IsNullOrEmpty(c.FileName))
-                            {
-                                <a asp-action="Download" asp-route-fileName="@c.FileName">@c.FileName</a>
-                            }
-                        </td>
-                        <td>@c.Status</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
-</div>
+            }
+        }
+    </tbody>
+</table>
 
+<!-- ✅ jQuery Script for Auto-Calculation -->
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            const rate = parseFloat($("#hourlyRate").text()) || 0;
+
+            $("#hoursWorked").on("input", function () {
+                const hours = parseFloat($(this).val()) || 0;
+                const total = hours * rate;
+                $("#totalPayment").val("R " + total.toFixed(2)); // formats result nicely
+            });
+        });
+    </script>
 }
-
-
-

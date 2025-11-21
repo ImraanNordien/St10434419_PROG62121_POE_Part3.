@@ -14,12 +14,9 @@ namespace PROG62121_POE.Services
         public Task<List<Claim>> GetAllClaimsAsync()
             => Task.FromResult(_claims.Values.ToList());
 
-        public Task<List<Claim>> GetClaimsByLecturerAsync(int lecturerId)
-            => Task.FromResult(_claims.Values.Where(c => c.LecturerId == lecturerId).ToList());
-
-        public Task<Claim?> GetClaimByIdAsync(int claimId)
+        public Task<Claim> GetClaimByIdAsync(int id)
         {
-            _claims.TryGetValue(claimId, out var claim);
+            _claims.TryGetValue(id, out var claim);
             return Task.FromResult(claim);
         }
 
@@ -30,10 +27,26 @@ namespace PROG62121_POE.Services
             return Task.CompletedTask;
         }
 
+        public Task<List<Claim>> GetClaimsByLecturerIdAsync(int lecturerId)
+        {
+            var result = _claims.Values.Where(c => c.LecturerId == lecturerId).ToList();
+            return Task.FromResult(result);
+        }
+
         public Task UpdateClaimAsync(Claim claim)
         {
             _claims[claim.ClaimId] = claim;
             return Task.CompletedTask;
         }
+
+        public Task<List<Claim>> GetClaimsByLecturerAsync(int lecturerId)
+        {
+            var claims = _claims.Values
+                .Where(c => c.LecturerId == lecturerId)
+                .ToList();
+
+            return Task.FromResult(claims);
+        }
+
     }
 }

@@ -16,6 +16,9 @@ namespace PROG62121_POE.Controllers
         // GET: Display all pending claims
         public async Task<IActionResult> Index()
         {
+            if (HttpContext.Session.GetString("Role") != "ProgrammeCoordinator")
+                return RedirectToAction("Login", "Account");
+
             var claims = (await _claimRepository.GetAllClaimsAsync())
                          .Where(c => c.Status == "Pending")
                          .ToList();
@@ -27,6 +30,9 @@ namespace PROG62121_POE.Controllers
         [HttpPost]
         public async Task<IActionResult> VerifyClaim(int claimId, string action)
         {
+            if (HttpContext.Session.GetString("Role") != "ProgrammeCoordinator")
+                return RedirectToAction("Login", "Account");
+
             var claim = await _claimRepository.GetClaimByIdAsync(claimId);
             if (claim == null)
                 return NotFound();

@@ -1,0 +1,27 @@
+﻿@model List<PROG62121_POE.Models.Claim>
+@{
+    ViewData["Title"] = "Approved Claims Report";
+}
+
+<h2>Approved Claims</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Lecturer Name</th>
+            <th>Hours Worked</th>
+            <th>Hourly Rate</th>
+            <th>Total Payment</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+                <td>@c.LecturerName</td>
+                <td>@c.HoursWorked</td>
+                <td>@c.HourlyRate</td>
+                <td>@c.TotalPayment</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -2,6 +2,7 @@
 using PROG62121_POE.Models;
 using PROG62121_POE.Services;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace PROG62121_POE.Controllers
 {
@@ -14,19 +15,26 @@ namespace PROG62121_POE.Controllers
             _claimRepo = claimRepo;
         }
 
-        // Display all pending claims
         public async Task<IActionResult> Index()
         {
-            var claims = await _claimRepo.GetAllClaimsAsync();
+            if (HttpContext.Session.GetString("Role") != "AcademicManager")
+                return RedirectToAction("Login", "Account");
+
+            var claims = (await _claimRepo.GetAllClaimsAsync())
+                         .Where(c => c.Status == "Verified")
+                         .ToList();
+
             return View(claims);
         }
 
-        // Approve claim
         [HttpPost]
         public async Task<IActionResult> Approve(int claimId)
         {
+            if (HttpContext.Session.GetString("Role") != "AcademicManager")
+                return RedirectToAction("Login", "Account");
+
             var claim = await _claimRepo.GetClaimByIdAsync(claimId);
-            if (claim != null)
+            if (claim != null && claim.Status == "Verified")
             {
                 claim.Status = "Approved";
                 await _claimRepo.UpdateClaimAsync(claim);
@@ -34,12 +42,14 @@ namespace PROG62121_POE.Controllers
             return RedirectToAction("Index");
         }
 
-        // Reject claim
         [HttpPost]
         public async Task<IActionResult> Reject(int claimId)
         {
+            if (HttpContext.Session.GetString("Role") != "AcademicManager")
+                return RedirectToAction("Login", "Account");
+
             var claim = await _claimRepo.GetClaimByIdAsync(claimId);
-            if (claim != null)
+            if (claim != null && claim.Status == "Verified")
             {
                 claim.Status = "Rejected";
                 await _claimRepo.UpdateClaimAsync(claim);
@@ -48,6 +58,3 @@ namespace PROG62121_POE.Controllers
         }
     }
 }
-
-
-

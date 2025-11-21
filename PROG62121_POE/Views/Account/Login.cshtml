@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="card bg-primary shadow-lg p-4 form-dark mx-auto mt-5" style="max-width: 400px;">
+    <h3 class="text-center mb-4">Login</h3>
+
+    <form asp-action="Login" method="post">
+        <div class="form-group mb-3">
+            <label>Email</label>
+            <input type="email" name="email" class="form-control" placeholder="Enter your email" required />
+        </div>
+
+        <div class="form-group mb-3">
+            <label>Password</label>
+            <input type="password" name="password" class="form-control" placeholder="Enter your password" required />
+        </div>
+
+        <button type="submit" class="btn btn-light w-100 fw-bold">Login</button>
+    </form>
+
+    @if (ViewBag.Error != null)
+    {
+        <p class="text-danger mt-3 text-center">@ViewBag.Error</p>
+    }
+</div>

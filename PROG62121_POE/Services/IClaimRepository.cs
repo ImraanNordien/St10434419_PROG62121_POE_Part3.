@@ -7,9 +7,16 @@ namespace PROG62121_POE.Services
     public interface IClaimRepository
     {
         Task<List<Claim>> GetAllClaimsAsync();
-        Task<List<Claim>> GetClaimsByLecturerAsync(int lecturerId);
-        Task<Claim?> GetClaimByIdAsync(int claimId);
+        Task<Claim> GetClaimByIdAsync(int id);
         Task AddClaimAsync(Claim claim);
+
+        // ✅ Added methods
+        Task<List<Claim>> GetClaimsByLecturerIdAsync(int lecturerId);
         Task UpdateClaimAsync(Claim claim);
+
+        Task<List<Claim>> GetClaimsByLecturerAsync(int lecturerId);
+
+
     }
+
 }

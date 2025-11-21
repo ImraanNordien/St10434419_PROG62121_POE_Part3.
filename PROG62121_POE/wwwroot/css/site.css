@@ -4,6 +4,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    color: #ffffff; /* default text color white */
 }
 
 /* Navbar background */
@@ -43,7 +44,7 @@ body {
 
 /* Page container */
 .page-container {
-    background-color: #ffffff; /* white for contrast */
+    background-color: #001f54; /* dark background for container */
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
@@ -51,38 +52,80 @@ body {
 }
 
     /* Page header */
-    .page-container h2 {
-        color: #00072d; /* dark navy title */
+    .page-container h2, .page-container h3, .page-container h4, .page-container h5 {
+        color: #ffffff; /* white headers */
         font-weight: 600;
         margin-bottom: 20px;
     }
 
     /* Form labels */
     .page-container label {
-        color: #00072d;
+        color: #ffffff; /* white label text */
         font-weight: 500;
     }
 
-/* Submit button */
+/* Form input text */
+.form-control {
+    color: #ffffff; /* white text typed in input fields */
+    background-color: #001f54; /* input field background */
+    border: 1px solid #00d1ff; /* cyan border */
+}
+
+    /* Placeholder text */
+    .form-control::placeholder {
+        color: #cceeff; /* light cyan placeholder */
+    }
+
+/* Submit and button text */
+.btn, .btn-primary, .btn-light {
+    color: #ffffff !important; /* white button text */
+    border: none;
+}
+
+/* Primary button */
 .btn-primary {
-    background-color: #00072d;
-    border-color: #00072d;
-    color: #ffffff;
-    transition: background-color 0.3s, color 0.3s;
+    background-color: #00d1ff; /* cyan button background */
 }
 
     .btn-primary:hover {
-        background-color: #00d1ff; /* cyan hover */
-        color: #00072d;
+        background-color: #ffffff;
+        color: #00072d !important; /* dark text on hover */
     }
+
+/* Light button (optional) */
+.btn-light {
+    background-color: #00072d;
+    color: #ffffff !important;
+}
+
+    .btn-light:hover {
+        background-color: #00d1ff;
+        color: #00072d !important;
+    }
+
+/* Tables (HR user list, claims, etc.) */
+.table, .table th, .table td {
+    color: #ffffff; /* all table text white */
+    border-color: #00d1ff;
+}
 
 /* Welcome message text */
 .welcome-text {
     color: #ffffff; /* white */
 }
 
+/* Homepage / Lecturer page image styling */
 .homepage-image {
     border: 3px solid #ffffff;
     border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* subtle shadow */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Temp/Error messages */
+.text-error {
+    color: #ff6666; /* red for errors */
+}
+
+.text-success {
+    color: #66ff66; /* green for success messages */
 }

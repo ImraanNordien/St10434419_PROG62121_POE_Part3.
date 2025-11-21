@@ -1,30 +1,33 @@
-﻿@{
-    ViewData["Title"] = "HR";
+﻿@model IEnumerable<PROG62121_POE.Models.User>
+@{
+    ViewData["Title"] = "HR Dashboard";
 }
 
-<div class="page-container">
-    <h2>Manage Lecturer Information</h2>
+<h2>HR Dashboard - Manage Users</h2>
+<a href="/HR/AddUser" class="btn btn-primary">Add New User</a>
 
-    <form>
-        <!-- Lecturer Name -->
-        <div class="mb-3">
-            <label for="lecturerName" class="form-label">Lecturer Name</label>
-            <input type="text" class="form-control" id="lecturerName" placeholder="Enter name">
-        </div>
-
-        <!-- Contact Email -->
-        <div class="mb-3">
-            <label for="lecturerEmail" class="form-label">Email</label>
-            <input type="email" class="form-control" id="lecturerEmail" placeholder="Enter email">
-        </div>
-
-        <!-- Hourly Rate -->
-        <div class="mb-3">
-            <label for="hourlyRate" class="form-label">Hourly Rate</label>
-            <input type="number" class="form-control" id="hourlyRate" placeholder="Set hourly rate">
-        </div>
-
-        <!--Submit -->
-        <button type="submit" class="btn btn-primary">Save Lecturer</button>
-    </form>
-</div>
+<table class="table table-bordered mt-3">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Hourly Rate</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var u in Model)
+        {
+            <tr>
+                <td>@($"{u.FirstName} {u.LastName}")</td>
+                <td>@u.Email</td>
+                <td>@u.Role</td>
+                <td>@(u.Role == "Lecturer" ? u.HourlyRate.ToString("C") : "-")</td>
+                <td>
+                    <a href="/HR/EditUser/@u.Id" class="btn btn-warning btn-sm">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
