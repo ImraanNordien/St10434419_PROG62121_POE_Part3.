@@ -59,7 +59,11 @@ At least 10 descriptive commits, including:
 - Unit tests  
 - Report generation  
 - UI styling updates  
-- Updated README/documentation  
+- Updated README/documentation
+
+## Access the Application
+
+Try the live web application here: https://localhost:7036/
 
 ## Conclusion
 
